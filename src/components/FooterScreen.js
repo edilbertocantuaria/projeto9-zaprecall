@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import questions from "../mock"
 
 export default function FooterScreen (){
     return(
         <Footer data-test="footer">
-            0/4 CONCLUÍDOS
+            {`/${questions.length} CONCLUÍDOS`}
+            {/* 0/4 CONCLUÍDOS */}
         </Footer>
     )
 }

@@ -4,7 +4,7 @@ import logoImage from "../assets/logo.png"
 import CardsRender from "./CardsRender";
 
 export default function MainScreen (){
-    const [questionShown, setQuestionShown] = useState("#FFFFFF");
+    const [questionShown, setQuestionShown] = useState([]);
     const[revealedCard, setRevealedCard] = useState([]);
 
     function revealQuestion(i){
@@ -12,8 +12,10 @@ export default function MainScreen (){
         
         const newCardRevealed =[...revealedCard, i];
         setRevealedCard(newCardRevealed);
-        setQuestionShown(i);   
-        console.log(newCardRevealed)
+
+        const newQuestionRevealed =[...questionShown, i]
+        setQuestionShown(newQuestionRevealed);   
+        // console.log(newCardRevealed)
     }
 
     return(

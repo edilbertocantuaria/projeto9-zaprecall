@@ -1,21 +1,29 @@
 import styled from "styled-components";
 import questions from "../mock"
 import showQuestion from "../assets/seta_play.png"
+import showAnswer from "../assets/seta_virar.png"
 
 export default function CardsRender(props){
      const {questionShown, revealedCard, revealQuestion} = props
-    //  console.log(questionShown);
+    //  const {revealedCard, revealQuestion} = props
+    // console.log(questionShown);
 
     return(
         questions.map ((_, i)=> 
     <Card 
         key={"question number" +i} 
         data-test="flashcard" 
+        text={questions[i].question}
         backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}>
         <QuestionNumber data-test="flashcard-text">
-            Pergunta {i+1}
+            {questionShown.includes(i) ? questions[i].question : `Pergunta ${i+1}`}
         </QuestionNumber>
-        <img src={showQuestion} alt="arrow to play" onClick={()=> revealQuestion(i)} data-test="play-btn"/>
+        <img 
+            // src={showQuestion} 
+            src={questionShown.includes(i) ? `${showAnswer}` : `${showQuestion}`}
+            alt="arrow to play" 
+            onClick={()=> revealQuestion(i)} 
+            data-test="play-btn"/>
      </Card>  
      )
 
