@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import questions from "../mock"
 import showQuestion from "../assets/seta_play.png"
@@ -5,8 +6,64 @@ import showAnswer from "../assets/seta_virar.png"
 
 export default function CardsRender(props){
      const {questionShown, revealedCard, revealQuestion} = props
-    //  const {revealedCard, revealQuestion} = props
-    // console.log(questionShown);
+
+     const [revealedAnswer, setRevealedAnswer] = useState([]);
+    
+     function correctStatement(i){
+        if (questionShown.includes(i)){
+            if (revealedAnswer.includes(i)){
+                console.log(questions[i].answer)
+                return (questions[i].answer)  
+            }
+            else {
+                return(questions[i].question)
+            }
+            
+        } else {
+            return(`Pergunta ${i+1}`)
+                    }
+     }
+
+     function correctArrow(i) {
+        if (questionShown.includes(i)) {
+          if (revealedAnswer.includes(i)) {
+            return (
+              <img
+                src={showQuestion}
+                alt="arrow to play"
+                onClick={() => setRevealedAnswer(revealedAnswer.filter((j) => j !== i))}
+                data-test="play-btn"
+              />
+            );
+          } else {
+            return (
+              <img
+                src={showAnswer}
+                alt="arrow to play"
+                onClick={() => setRevealedAnswer([...revealedAnswer, i])}
+                data-test="turn-btn"
+              />
+            );
+          }
+        } else {
+          return (
+            <img
+              src={showQuestion}
+              alt="arrow to play"
+              onClick={() => revealQuestion(i)}
+              data-test="play-btn"
+            />
+          );
+        }
+      }
+
+    // function revealAnswer(i){
+    //     console.log("entrou na função de revelar a resposta")
+    //     const answer = questions[i].answer
+    //     setRevealedAnswer(answer);
+        
+    //     // setCorrectStatement(answer)
+    // }
 
     return(
         questions.map ((_, i)=> 
@@ -16,14 +73,9 @@ export default function CardsRender(props){
         text={questions[i].question}
         backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}>
         <QuestionNumber data-test="flashcard-text">
-            {questionShown.includes(i) ? questions[i].question : `Pergunta ${i+1}`}
+            {correctStatement(i)}
         </QuestionNumber>
-        <img 
-            // src={showQuestion} 
-            src={questionShown.includes(i) ? `${showAnswer}` : `${showQuestion}`}
-            alt="arrow to play" 
-            onClick={()=> revealQuestion(i)} 
-            data-test="play-btn"/>
+            {correctArrow(i)}
      </Card>  
      )
 

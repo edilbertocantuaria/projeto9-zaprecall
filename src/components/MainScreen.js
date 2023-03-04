@@ -8,15 +8,15 @@ export default function MainScreen (){
     const[revealedCard, setRevealedCard] = useState([]);
 
     function revealQuestion(i){
-        // console.log(`a função tá sendo chamada ${i+1}`);
         
         const newCardRevealed =[...revealedCard, i];
         setRevealedCard(newCardRevealed);
 
         const newQuestionRevealed =[...questionShown, i]
         setQuestionShown(newQuestionRevealed);   
-        // console.log(newCardRevealed)
     }
+
+
 
     return(
         <Main>
