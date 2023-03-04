@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function FooterScreen (){
     return(
-        <Footer>
+        <Footer data-test="footer">
             0/4 CONCLUÍDOS
         </Footer>
     )

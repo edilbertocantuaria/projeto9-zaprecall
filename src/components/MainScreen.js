@@ -1,8 +1,21 @@
+import { useState } from "react";
 import styled from "styled-components";
 import logoImage from "../assets/logo.png"
 import CardsRender from "./CardsRender";
 
 export default function MainScreen (){
+    const [questionShown, setQuestionShown] = useState("#FFFFFF");
+    const[revealedCard, setRevealedCard] = useState([]);
+
+    function revealQuestion(i){
+        // console.log(`a função tá sendo chamada ${i+1}`);
+        
+        const newCardRevealed =[...revealedCard, i];
+        setRevealedCard(newCardRevealed);
+        setQuestionShown(i);   
+        console.log(newCardRevealed)
+    }
+
     return(
         <Main>
             <Logo>
@@ -10,7 +23,11 @@ export default function MainScreen (){
                 ZapRecall
             </Logo>        
             <Cards>
-                <CardsRender/>
+                <CardsRender
+                      questionShown={questionShown}
+                      revealedCard={revealedCard}
+                      revealQuestion={revealQuestion}
+                />
             </Cards>
         </Main>
     )
