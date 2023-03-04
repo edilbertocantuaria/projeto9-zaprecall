@@ -3,7 +3,7 @@ import questions from "../mock"
 import showQuestion from "../assets/seta_play.png"
 
 export default function CardsRender(){
-console.log(questions.length);
+// console.log(questions.length);
 
     return(
         questions.map ((_, i)=> 

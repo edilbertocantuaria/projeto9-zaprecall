@@ -10,7 +10,7 @@ export default function MainScreen (){
                 ZapRecall
             </Logo>        
             <Cards>
-            <CardsRender/>
+                <CardsRender/>
             </Cards>
         </Main>
     )
@@ -19,7 +19,6 @@ export default function MainScreen (){
 
 const Main = styled.div`
 width: 100%;
-// height: 90vh;
 background-color: #FB6B6B;
 
 display: flex;
@@ -55,24 +54,3 @@ align-items: space-between;
 justify-items: center;
 
 `
-const Card = styled.div`
-width: 80vw;
-height: 10.8vh;
-
-background-color: #FFFFFF;
-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
-border-radius: 5px;
-margin-bottom: 20px;
-padding: 15px;
-
-display: flex;
-align-items: center;
-justify-content: space-between;
-`
-const QuestionNumber = styled.div`
-font-family: 'Recursive';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-color: #333333;
-` 
