@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logoImage from "../assets/logo.png"
-import showQuestion from "../assets/seta_play.png"
+import CardsRender from "./CardsRender";
 
 export default function MainScreen (){
     return(
@@ -8,21 +8,9 @@ export default function MainScreen (){
             <Logo>
                 <ImgLogo src={logoImage}/>
                 ZapRecall
-            </Logo>
-            
+            </Logo>        
             <Cards>
-                    <Card>
-                    <QuestionNumber>
-                        Frente
-                    </QuestionNumber>
-                    <img src={showQuestion} alt="arrow to play"/>
-                    </Card>  
-
-                <Card>Pergunta aqui</Card>
-                <Card>Pergunta aqui</Card>
-                <Card>Pergunta aqui</Card>
-                <Card>Pergunta aqui</Card>
-                <Card>Pergunta aqui</Card>
+            <CardsRender/>
             </Cards>
         </Main>
     )
