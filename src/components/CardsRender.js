@@ -46,6 +46,16 @@ export default function CardsRender(props){
         setRevealedAnswer(updatingRevealedAnswer)
     }
 
+    function wrongAnswer(i){
+        console.log(`Resposta da questão ${i+1}: errada `)
+    }
+    function partialAnswer(i){
+        console.log(`Resposta da questão ${i+1}: parcial `)
+    }
+    function rightAnswer(i){
+        console.log(`Resposta da questão ${i+1}: certa `)
+    }
+
     return(
         questions.map ((_, i)=> 
     <Card 
@@ -60,9 +70,9 @@ export default function CardsRender(props){
             {correctStatement(i)}
             <ZapsOptions
                 zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
-                <NotRemembered data-test="no-btn">Não lembrei</NotRemembered>
-                <AlmostRemembered data-test="partial-btn">Quase não lembrei</AlmostRemembered>
-                <Remembered data-test="zap-btn">Zap!</Remembered>
+                <NotRemembered data-test="no-btn" onClick={()=> wrongAnswer(i)}>Não lembrei</NotRemembered>
+                <AlmostRemembered data-test="partial-btn" onClick={()=> partialAnswer(i)}>Quase não lembrei</AlmostRemembered>
+                <Remembered data-test="zap-btn" onClick={()=> rightAnswer(i)}>Zap!</Remembered>
             </ZapsOptions>
             
         </Question>
