@@ -13,7 +13,7 @@ function flips(){
   countingFlips(auxFlipened)
 }
 function countingFlips(){
-  return `${(auxFlipened)}/${questions.length} CONCLUÍDOS`
+  return `${(auxFlipened/2)}/${questions.length} CONCLUÍDOS`
 }
  
   return (
