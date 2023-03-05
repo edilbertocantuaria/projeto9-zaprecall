@@ -6,15 +6,27 @@ import CardsRender from "./CardsRender";
 export default function MainScreen (){
     const [questionShown, setQuestionShown] = useState([]);
     const [revealedCard, setRevealedCard] = useState([]);
-    const [revealedAnswer, setRevealedAnswer] = useState([])
+
 
     function revealQuestion(i){
-        
         const newCardRevealed =[...revealedCard, i];
         setRevealedCard(newCardRevealed);
 
-        const newQuestionRevealed =[...questionShown, i]
+      
+        const newQuestionRevealed =[...questionShown, i];
         setQuestionShown(newQuestionRevealed);   
+
+       
+    }
+
+    function showingQuestionAgain(i){
+        const newQuestionShown = questionShown.filter((element) => element !== i);
+        setQuestionShown(newQuestionShown);
+
+        const newRevealedCard = revealedCard.filter((element) => element !== i);
+        setRevealedCard(newRevealedCard);
+        
+    
     }
 
     return(
@@ -28,6 +40,8 @@ export default function MainScreen (){
                       questionShown={questionShown}
                       revealedCard={revealedCard}
                       revealQuestion={revealQuestion}
+                      showingQuestionAgain={showingQuestionAgain}
+
                 />
             </Cards>
         </Main>

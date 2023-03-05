@@ -4,86 +4,102 @@ import showQuestion from "../assets/seta_play.png"
 import showAnswer from "../assets/seta_virar.png"
 import { useState } from "react";
 
-export default function CardsRender(props){
-     const {questionShown, revealedCard, revealQuestion} = props
-     const [ revealedAnswer, setRevealedAnswer] = useState([])
+export default function CardsRender(props) {
+    const { questionShown, revealedCard, revealQuestion, showingQuestionAgain} = props;
+    const [revealedAnswer, setRevealedAnswer] = useState([]);
+    //const [deleteQuestion, setDeleteQuestion] = useState([]);
+    //const [teste, setTeste] = useState([]);
+    
 
-     // função que vai exibir: o número da pergunta, a pergunta e a resposta
-     function correctStatement(i){
-        if (questionShown.includes(i)){
-            return(
-                revealedAnswer[i] ? questions[i].answer : questions[i].question)
-            
+    function correctStatement(i) {
+        if (questionShown.includes(i)) {
+
+            return (revealedAnswer[i] ? questions[i].answer : questions[i].question)
+
         } else {
-            return(`Pergunta ${i+1}`)
-                    }
-     } 
+            return (`Pergunta ${i + 1}`)
+        }
+    }
 
-     // função que vai substituir as setas
-     function correctArrow(i){
-        if (questionShown.includes(i)){
+    // função que vai substituir as setas
+    function correctArrow(i) {
+        if (questionShown.includes(i)) {
             return (
-            <img 
-            src={showAnswer}
-            alt="arrow to play" 
-            onClick={()=> revealAnswer(i)} 
-            data-test="turn-btn"/>
+                <img
+                    src={showAnswer}
+                    alt="arrow to play"
+                    onClick={() => revealAnswer(i)}
+                    data-test="turn-btn" />
             )
-        } else{
+        } else {
             return (
-                <img 
-                src={showQuestion}
-                alt="arrow to play" 
-                onClick={()=> revealQuestion(i)} 
-                data-test="play-btn"/>
+                <img
+                    src={showQuestion}
+                    alt="arrow to play"
+                    onClick={() => revealQuestion(i)}
+                    data-test="play-btn" />
             )
         }
     }
 
-    function revealAnswer(i){
-        const updatingRevealedAnswer =[...revealedAnswer];
-        updatingRevealedAnswer[i]=true;
+    function revealAnswer(i) {
+        const updatingRevealedAnswer = [...revealedAnswer];
+        updatingRevealedAnswer[i] = true;
         setRevealedAnswer(updatingRevealedAnswer)
     }
 
-    function wrongAnswer(i){
-        console.log(`Resposta da questão ${i+1}: errada `)
-    }
-    function partialAnswer(i){
-        console.log(`Resposta da questão ${i+1}: parcial `)
-    }
-    function rightAnswer(i){
-        console.log(`Resposta da questão ${i+1}: certa `)
+    function wrongAnswer(i) {
+        console.log(`Resposta da questão ${i + 1}: errado `)
+        hiddenZapsOptions(i)
+        
     }
 
-    return(
-        questions.map ((_, i)=> 
-    <Card 
-        key={"question number" +i} 
-        data-test="flashcard" 
-        text={questions[i].question}
-        backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}>
-        <Question 
-        fontSize={revealedCard.includes(i) ? "18px" : "16px"}
-        fontWeight={revealedCard.includes(i) ? "400" : "700"}
-        data-test="flashcard-text">
-            {correctStatement(i)}
-            <ZapsOptions
-                zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
-                <NotRemembered data-test="no-btn" onClick={()=> wrongAnswer(i)}>Não lembrei</NotRemembered>
-                <AlmostRemembered data-test="partial-btn" onClick={()=> partialAnswer(i)}>Quase não lembrei</AlmostRemembered>
-                <Remembered data-test="zap-btn" onClick={()=> rightAnswer(i)}>Zap!</Remembered>
-            </ZapsOptions>
-            
-        </Question>
-            <ArrowButton
-            displayButton={revealedAnswer[i] ? "none" : "flex"}
+    function partialAnswer(i) {
+        console.log(`Resposta da questão ${i + 1}: parcial `)
+        hiddenZapsOptions(i)
+    }
+
+    function rightAnswer(i) {
+        console.log(`Resposta da questão ${i + 1}: certa `)
+        hiddenZapsOptions(i)
+    }
+
+    function hiddenZapsOptions(i){
+        showingQuestionAgain(i);
+        revealedAnswer[i]=false;
+    }
+
+    return (
+        questions.map((_, i) =>
+            <Card
+                key={"question number" + i}
+                data-test="flashcard"
+                text={questions[i].question}
+                //fontColor={}
+                backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}
+                //lineThrough={deleteQuestion.includes(i) ? "line-through" : "line-through"}
             >
-            {correctArrow(i)}
-            </ArrowButton>
-            
-     </Card>  
-     )
+                <Question
+                    fontSize={revealedCard.includes(i) ? "18px" : "16px"}
+                    fontWeight={revealedCard.includes(i) ? "400" : "700"}
+                    data-test="flashcard-text">
+                    {correctStatement(i)}
+                    <ZapsOptions
+                        zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
+                        <NotRemembered data-test="no-btn" onClick={() => wrongAnswer(i)}>Não lembrei</NotRemembered>
+                        <AlmostRemembered data-test="partial-btn" onClick={() => partialAnswer(i)}>Quase não lembrei</AlmostRemembered>
+                        <Remembered data-test="zap-btn" onClick={() => rightAnswer(i)}>Zap!</Remembered>
+                    </ZapsOptions>
+
+                </Question>
+                <ArrowButton
+                    displayButton={revealedAnswer[i] ? "none" : "flex"}
+                >
+                    {correctArrow(i)}
+                </ArrowButton>
+
+            </Card>
+        )
 
     )
 }
@@ -105,9 +121,11 @@ justify-content: space-between;
 const Question = styled.div`
 font-family: 'Recursive';
 font-style: normal;
+text-decoration-line: ${props => props.lineThrough};
 font-weight: ${props => props.fontWeight};
 font-size: ${props => props.fontSize};
 color: #333333;
+//color: ${props => props.fontColor}
 `
 const ArrowButton = styled.div`
 display: ${props => props.displayButton};
@@ -119,7 +137,7 @@ border: none;
 background-collor: none;
 `
 
-const ZapsOptions = styled.div `
+const ZapsOptions = styled.div`
 width: 75vw;
 margin-top: 10px;
 
