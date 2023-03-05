@@ -2,6 +2,9 @@ import styled from "styled-components";
 import questions from "../mock"
 import showQuestion from "../assets/seta_play.png"
 import showAnswer from "../assets/seta_virar.png"
+import zapAnswerIcon from "../assets/icone_certo.png"
+import partialAnswerIcon from "../assets/icone_quase.png"
+import wrongAnswerIcon from "../assets/icone_erro.png"
 import { useState } from "react";
 
 export default function CardsRender(props) {
@@ -9,7 +12,7 @@ export default function CardsRender(props) {
     const [revealedAnswer, setRevealedAnswer] = useState([]);
      const [deleteQuestion, setDeleteQuestion] = useState([]);
      const [statusCard, setStatusCard] = useState([]);
-     const [color, setColor] = useState([]);
+     //const [color, setColor] = useState([]);
     //const [teste, setTeste] = useState([]);
 
 
@@ -73,21 +76,47 @@ export default function CardsRender(props) {
         setDeleteQuestion(newDeleteQuestion);
 
     }
+    
     function colorFont(i){
-        if (statusCard[i]==="wrong"){
-            console.log("entrou no wrong")
-            return "#FF3030"
-        }
-        if (statusCard[i]==="partial"){
-            console.log("entrou no partial")
-            return " #FF922E"
-        }
-        if (statusCard[i]==="right"){
-            console.log("entrou no right")
-            return "#2FBE34"
-        }
+        switch(statusCard[i]){
+            case "wrong":
+                return "#FF3030";
+            
+            case "partial":
+                return " #FF922E";
+            
+            case "right":
+                return "#2FBE34";       
     }
+}
+function finalIcon(i){
+    switch(statusCard[i]){
+        case "wrong":
+            return (
+                <img
+                    src={wrongAnswerIcon}
+                    alt="wrong zap"
+                    data-test="no-icon" />
+            );
+        
+        case "partial":
+            return (
+                <img
+                src={partialAnswerIcon}
+                alt="wrong zap"
+                data-test="partial-icon" />
+            );
+        
+        case "right":
+            return (
+                <img
+                src={zapAnswerIcon}
+                alt="wrong zap"
+                data-test="zap-icon" />
+            );     
+}
 
+}
     return (
         questions.map((_, i) =>
             <Card
@@ -117,7 +146,12 @@ export default function CardsRender(props) {
                     displayButton={deleteQuestion.includes(i)? "none" : "flex"}
                 >
                     {correctArrow(i)}
+                   
                 </ArrowButton>
+                <FinalIcon
+                displayIcon={deleteQuestion.includes(i)? "flex" : "none"}>
+                 {finalIcon(i)}
+                </FinalIcon>
 
             </Card>
         )
@@ -150,6 +184,15 @@ color: ${props => props.fontColor}
 `
 const ArrowButton = styled.div`
 display: ${props => props.displayButton};
+align-items: center;
+justify-content: center;
+background-color: ${props => props.backgroundColor};
+
+border: none;
+background-collor: none;
+`
+const FinalIcon = styled.div`
+display: ${props => props.displayIcon};
 align-items: center;
 justify-content: center;
 background-color: ${props => props.backgroundColor};
