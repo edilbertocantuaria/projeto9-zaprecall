@@ -5,11 +5,12 @@ import showAnswer from "../assets/seta_virar.png"
 import { useState } from "react";
 
 export default function CardsRender(props) {
-    const { questionShown, revealedCard, revealQuestion, showingQuestionAgain} = props;
+    const { questionShown, revealedCard, revealQuestion, showingQuestionAgain } = props;
     const [revealedAnswer, setRevealedAnswer] = useState([]);
-    //const [deleteQuestion, setDeleteQuestion] = useState([]);
+     const [deleteQuestion, setDeleteQuestion] = useState([]);
+     const [statusCard, setStatusCard] = useState([]);
     //const [teste, setTeste] = useState([]);
-    
+
 
     function correctStatement(i) {
         if (questionShown.includes(i)) {
@@ -51,7 +52,11 @@ export default function CardsRender(props) {
     function wrongAnswer(i) {
         console.log(`Resposta da questão ${i + 1}: errado `)
         hiddenZapsOptions(i)
-        
+
+        const newStatusCard = [...statusCard, "wrong"];
+        setStatusCard(newStatusCard);
+        console.log(statusCard)
+
     }
 
     function partialAnswer(i) {
@@ -64,9 +69,13 @@ export default function CardsRender(props) {
         hiddenZapsOptions(i)
     }
 
-    function hiddenZapsOptions(i){
+    function hiddenZapsOptions(i) {
         showingQuestionAgain(i);
-        revealedAnswer[i]=false;
+        revealedAnswer[i] = false;
+
+        const newDeleteQuestion = [...deleteQuestion, i];
+        setDeleteQuestion(newDeleteQuestion);
+
     }
 
     return (
@@ -77,12 +86,16 @@ export default function CardsRender(props) {
                 text={questions[i].question}
                 //fontColor={}
                 backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}
-                //lineThrough={deleteQuestion.includes(i) ? "line-through" : "line-through"}
+
             >
                 <Question
                     fontSize={revealedCard.includes(i) ? "18px" : "16px"}
                     fontWeight={revealedCard.includes(i) ? "400" : "700"}
-                    data-test="flashcard-text">
+                    data-test="flashcard-text"
+                    lineThrough={deleteQuestion.includes(i) ? "line-through" : "none"}
+                    //fontColor={}
+                    
+                    >
                     {correctStatement(i)}
                     <ZapsOptions
                         zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
@@ -93,7 +106,7 @@ export default function CardsRender(props) {
 
                 </Question>
                 <ArrowButton
-                    displayButton={revealedAnswer[i] ? "none" : "flex"}
+                    displayButton={deleteQuestion.includes(i)? "none" : "flex"}
                 >
                     {correctArrow(i)}
                 </ArrowButton>

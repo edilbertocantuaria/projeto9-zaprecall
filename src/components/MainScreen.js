@@ -3,44 +3,44 @@ import styled from "styled-components";
 import logoImage from "../assets/logo.png"
 import CardsRender from "./CardsRender";
 
-export default function MainScreen (){
+export default function MainScreen() {
     const [questionShown, setQuestionShown] = useState([]);
     const [revealedCard, setRevealedCard] = useState([]);
+    //const [statusCard, setStatusCard] = useState([]);
+    //const [deleteQuestion, setDeleteQuestion] = useState([]);
 
 
-    function revealQuestion(i){
-        const newCardRevealed =[...revealedCard, i];
+    function revealQuestion(i) {
+        const newCardRevealed = [...revealedCard, i];
         setRevealedCard(newCardRevealed);
 
-      
-        const newQuestionRevealed =[...questionShown, i];
-        setQuestionShown(newQuestionRevealed);   
 
-       
+        const newQuestionRevealed = [...questionShown, i];
+        setQuestionShown(newQuestionRevealed);
+
     }
 
-    function showingQuestionAgain(i){
+    function showingQuestionAgain(i) {
         const newQuestionShown = questionShown.filter((element) => element !== i);
         setQuestionShown(newQuestionShown);
 
         const newRevealedCard = revealedCard.filter((element) => element !== i);
         setRevealedCard(newRevealedCard);
-        
-    
     }
 
-    return(
+    return (
         <Main>
             <Logo>
-                <ImgLogo src={logoImage}/>
+                <ImgLogo src={logoImage} />
                 ZapRecall
-            </Logo>        
+            </Logo>
             <Cards>
                 <CardsRender
-                      questionShown={questionShown}
-                      revealedCard={revealedCard}
-                      revealQuestion={revealQuestion}
-                      showingQuestionAgain={showingQuestionAgain}
+                    questionShown={questionShown}
+                    revealedCard={revealedCard}
+                    revealQuestion={revealQuestion}
+                    showingQuestionAgain={showingQuestionAgain}
+                    //deleteQuestion={deleteQuestion}
 
                 />
             </Cards>
@@ -58,7 +58,7 @@ flex-direction: column;
 align-items: center;
 justify-items: center;
 `
-const Logo= styled.div`
+const Logo = styled.div`
 width:255.61px;
 height: 60px;
 margin-top: 40px;
@@ -74,7 +74,7 @@ display: flex;
 align-items:center;
 justify-content: space-around;
 `
-const ImgLogo=styled.img`
+const ImgLogo = styled.img`
 width: 52px;
 height: 60px;
 `
