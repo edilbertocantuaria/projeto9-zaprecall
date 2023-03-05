@@ -10,11 +10,8 @@ import { useState } from "react";
 export default function CardsRender(props) {
     const { questionShown, revealedCard, revealQuestion, showingQuestionAgain } = props;
     const [revealedAnswer, setRevealedAnswer] = useState([]);
-     const [deleteQuestion, setDeleteQuestion] = useState([]);
-     const [statusCard, setStatusCard] = useState([]);
-     //const [color, setColor] = useState([]);
-    //const [teste, setTeste] = useState([]);
-
+    const [deleteQuestion, setDeleteQuestion] = useState([]);
+    const [statusCard, setStatusCard] = useState([]);
 
     function correctStatement(i) {
         if (questionShown.includes(i)) {
@@ -47,6 +44,19 @@ export default function CardsRender(props) {
         }
     }
 
+    function hideArrow(i){
+        let auxHidden;
+        if( revealedAnswer[i] || deleteQuestion.includes(i)){
+           auxHidden = "none" 
+        }
+            else(
+            auxHidden = "flex" 
+            )
+            
+        return auxHidden
+
+    }
+
     function revealAnswer(i) {
         const updatingRevealedAnswer = [...revealedAnswer];
         updatingRevealedAnswer[i] = true;
@@ -55,17 +65,17 @@ export default function CardsRender(props) {
 
     function wrongAnswer(i) {
         hiddenZapsOptions(i)
-        statusCard[i]="wrong"
+        statusCard[i] = "wrong"
     }
 
-     function partialAnswer(i) {
+    function partialAnswer(i) {
         hiddenZapsOptions(i)
-        statusCard[i]="partial"
+        statusCard[i] = "partial"
     }
 
     function rightAnswer(i) {
         hiddenZapsOptions(i)
-        statusCard[i]="right"
+        statusCard[i] = "right"
     }
 
     function hiddenZapsOptions(i) {
@@ -76,47 +86,47 @@ export default function CardsRender(props) {
         setDeleteQuestion(newDeleteQuestion);
 
     }
-    
-    function colorFont(i){
-        switch(statusCard[i]){
+
+    function colorFont(i) {
+        switch (statusCard[i]) {
             case "wrong":
                 return "#FF3030";
-            
+
             case "partial":
                 return " #FF922E";
-            
-            case "right":
-                return "#2FBE34";       
-    }
-}
-function finalIcon(i){
-    switch(statusCard[i]){
-        case "wrong":
-            return (
-                <img
-                    src={wrongAnswerIcon}
-                    alt="wrong zap"
-                    data-test="no-icon" />
-            );
-        
-        case "partial":
-            return (
-                <img
-                src={partialAnswerIcon}
-                alt="wrong zap"
-                data-test="partial-icon" />
-            );
-        
-        case "right":
-            return (
-                <img
-                src={zapAnswerIcon}
-                alt="wrong zap"
-                data-test="zap-icon" />
-            );     
-}
 
-}
+            case "right":
+                return "#2FBE34";
+        }
+    }
+    function finalIcon(i) {
+        switch (statusCard[i]) {
+            case "wrong":
+                return (
+                    <img
+                        src={wrongAnswerIcon}
+                        alt="wrong zap"
+                        data-test="no-icon" />
+                );
+
+            case "partial":
+                return (
+                    <img
+                        src={partialAnswerIcon}
+                        alt="wrong zap"
+                        data-test="partial-icon" />
+                );
+
+            case "right":
+                return (
+                    <img
+                        src={zapAnswerIcon}
+                        alt="wrong zap"
+                        data-test="zap-icon" />
+                );
+        }
+
+    }
     return (
         questions.map((_, i) =>
             <Card
@@ -132,7 +142,7 @@ function finalIcon(i){
                     data-test="flashcard-text"
                     lineThrough={deleteQuestion.includes(i) ? "line-through" : "none"}
                     fontColor={deleteQuestion.includes(i) ? (colorFont(i)) : "#333333"}
-                    >
+                >
                     {correctStatement(i)}
                     <ZapsOptions
                         zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
@@ -143,14 +153,14 @@ function finalIcon(i){
 
                 </Question>
                 <ArrowButton
-                    displayButton={deleteQuestion.includes(i)? "none" : "flex"}
+                    displayButton={hideArrow(i)}
                 >
                     {correctArrow(i)}
-                   
+
                 </ArrowButton>
                 <FinalIcon
-                displayIcon={deleteQuestion.includes(i)? "flex" : "none"}>
-                 {finalIcon(i)}
+                    displayIcon={deleteQuestion.includes(i) ? "flex" : "none"}>
+                    {finalIcon(i)}
                 </FinalIcon>
 
             </Card>
