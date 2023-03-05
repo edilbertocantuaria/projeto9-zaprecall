@@ -5,7 +5,8 @@ import CardsRender from "./CardsRender";
 
 export default function MainScreen (){
     const [questionShown, setQuestionShown] = useState([]);
-    const[revealedCard, setRevealedCard] = useState([]);
+    const [revealedCard, setRevealedCard] = useState([]);
+    const [revealedAnswer, setRevealedAnswer] = useState([])
 
     function revealQuestion(i){
         
@@ -15,8 +16,6 @@ export default function MainScreen (){
         const newQuestionRevealed =[...questionShown, i]
         setQuestionShown(newQuestionRevealed);   
     }
-
-
 
     return(
         <Main>

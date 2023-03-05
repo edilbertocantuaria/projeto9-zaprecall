@@ -1,69 +1,50 @@
-import { useState } from "react";
 import styled from "styled-components";
 import questions from "../mock"
 import showQuestion from "../assets/seta_play.png"
 import showAnswer from "../assets/seta_virar.png"
+import { useState } from "react";
 
 export default function CardsRender(props){
      const {questionShown, revealedCard, revealQuestion} = props
+     const [ revealedAnswer, setRevealedAnswer] = useState([])
 
-     const [revealedAnswer, setRevealedAnswer] = useState([]);
-    
+     // função que vai exibir: o número da pergunta, a pergunta e a resposta
      function correctStatement(i){
         if (questionShown.includes(i)){
-            if (revealedAnswer.includes(i)){
-                console.log(questions[i].answer)
-                return (questions[i].answer)  
-            }
-            else {
-                return(questions[i].question)
-            }
+            return(
+                revealedAnswer[i] ? questions[i].answer : questions[i].question)
             
         } else {
             return(`Pergunta ${i+1}`)
                     }
-     }
+     } 
 
-     function correctArrow(i) {
-        if (questionShown.includes(i)) {
-          if (revealedAnswer.includes(i)) {
+     // função que vai substituir as setas
+     function correctArrow(i){
+        if (questionShown.includes(i)){
             return (
-              <img
+            <img 
+            src={showAnswer}
+            alt="arrow to play" 
+            onClick={()=> revealAnswer(i)} 
+            data-test="turn-btn"/>
+            )
+        } else{
+            return (
+                <img 
                 src={showQuestion}
-                alt="arrow to play"
-                onClick={() => setRevealedAnswer(revealedAnswer.filter((j) => j !== i))}
-                data-test="play-btn"
-              />
-            );
-          } else {
-            return (
-              <img
-                src={showAnswer}
-                alt="arrow to play"
-                onClick={() => setRevealedAnswer([...revealedAnswer, i])}
-                data-test="turn-btn"
-              />
-            );
-          }
-        } else {
-          return (
-            <img
-              src={showQuestion}
-              alt="arrow to play"
-              onClick={() => revealQuestion(i)}
-              data-test="play-btn"
-            />
-          );
+                alt="arrow to play" 
+                onClick={()=> revealQuestion(i)} 
+                data-test="play-btn"/>
+            )
         }
-      }
+    }
 
-    // function revealAnswer(i){
-    //     console.log("entrou na função de revelar a resposta")
-    //     const answer = questions[i].answer
-    //     setRevealedAnswer(answer);
-        
-    //     // setCorrectStatement(answer)
-    // }
+    function revealAnswer(i){
+        const updatingRevealedAnswer =[...revealedAnswer];
+        updatingRevealedAnswer[i]=true;
+        setRevealedAnswer(updatingRevealedAnswer)
+    }
 
     return(
         questions.map ((_, i)=> 
@@ -75,7 +56,12 @@ export default function CardsRender(props){
         <QuestionNumber data-test="flashcard-text">
             {correctStatement(i)}
         </QuestionNumber>
+            <Button
+            displayButton={revealedAnswer[i] ? "none" : "flex"}
+            >
             {correctArrow(i)}
+            </Button>
+            
      </Card>  
      )
 
@@ -103,4 +89,13 @@ font-style: normal;
 font-weight: 700;
 font-size: 16px;
 color: #333333;
+`
+const Button = styled.div`
+display: ${props => props.displayButton};
+align-items: center;
+justify-content: center;
+background-color: ${props => props.backgroundColor};
+
+border: none;
+background-collor: none;
 `
