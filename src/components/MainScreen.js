@@ -3,12 +3,10 @@ import styled from "styled-components";
 import logoImage from "../assets/logo.png"
 import CardsRender from "./CardsRender";
 
-export default function MainScreen() {
+export default function MainScreen(props) {
+    const {flips} = props
     const [questionShown, setQuestionShown] = useState([]);
     const [revealedCard, setRevealedCard] = useState([]);
-    //const [statusCard, setStatusCard] = useState([]);
-    //const [deleteQuestion, setDeleteQuestion] = useState([]);
-
 
     function revealQuestion(i) {
         const newCardRevealed = [...revealedCard, i];
@@ -26,7 +24,17 @@ export default function MainScreen() {
 
         const newRevealedCard = revealedCard.filter((element) => element !== i);
         setRevealedCard(newRevealedCard);
+
+
     }
+
+
+    function countFlipened(i){
+        flips();
+
+        return
+    }
+
 
     return (
         <Main>
@@ -36,12 +44,13 @@ export default function MainScreen() {
             </Logo>
             <Cards>
                 <CardsRender
+                    
                     questionShown={questionShown}
                     revealedCard={revealedCard}
+                    
                     revealQuestion={revealQuestion}
                     showingQuestionAgain={showingQuestionAgain}
-                    //deleteQuestion={deleteQuestion}
-
+                    countFlipened={countFlipened}
                 />
             </Cards>
         </Main>

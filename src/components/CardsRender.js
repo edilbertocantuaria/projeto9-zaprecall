@@ -8,7 +8,7 @@ import wrongAnswerIcon from "../assets/icone_erro.png"
 import { useState } from "react";
 
 export default function CardsRender(props) {
-    const { questionShown, revealedCard, revealQuestion, showingQuestionAgain } = props;
+    const { questionShown, revealedCard, revealQuestion, showingQuestionAgain, countFlipened} = props;
     const [revealedAnswer, setRevealedAnswer] = useState([]);
     const [deleteQuestion, setDeleteQuestion] = useState([]);
     const [statusCard, setStatusCard] = useState([]);
@@ -44,15 +44,15 @@ export default function CardsRender(props) {
         }
     }
 
-    function hideArrow(i){
+    function hideArrow(i) {
         let auxHidden;
-        if( revealedAnswer[i] || deleteQuestion.includes(i)){
-           auxHidden = "none" 
+        if (revealedAnswer[i] || deleteQuestion.includes(i)) {
+            auxHidden = "none"
         }
-            else(
-            auxHidden = "flex" 
-            )
-            
+        else (
+            auxHidden = "flex"
+        )
+
         return auxHidden
 
     }
@@ -99,6 +99,7 @@ export default function CardsRender(props) {
                 return "#2FBE34";
         }
     }
+
     function finalIcon(i) {
         switch (statusCard[i]) {
             case "wrong":
@@ -125,8 +126,10 @@ export default function CardsRender(props) {
                         data-test="zap-icon" />
                 );
         }
-
     }
+
+
+
     return (
         questions.map((_, i) =>
             <Card
@@ -159,7 +162,8 @@ export default function CardsRender(props) {
 
                 </ArrowButton>
                 <FinalIcon
-                    displayIcon={deleteQuestion.includes(i) ? "flex" : "none"}>
+                    displayIcon={deleteQuestion.includes(i) ? "flex" : "none"}
+                    teste={deleteQuestion.includes(i) ?countFlipened(i) : "" }>
                     {finalIcon(i)}
                 </FinalIcon>
 

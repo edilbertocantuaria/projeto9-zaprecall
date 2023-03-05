@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import questions from "../mock"
+import { useState } from "react";
 
-export default function FooterScreen (){
+export default function FooterScreen (props){
+    const {countingFlips} = props
+
     return(
         <Footer data-test="footer">
-            {`/${questions.length} CONCLUÍDOS`}
-            {/* 0/4 CONCLUÍDOS */}
+           {countingFlips()}
         </Footer>
     )
 }
