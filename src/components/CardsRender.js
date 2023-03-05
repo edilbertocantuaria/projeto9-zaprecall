@@ -53,14 +53,24 @@ export default function CardsRender(props){
         data-test="flashcard" 
         text={questions[i].question}
         backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}>
-        <QuestionNumber data-test="flashcard-text">
+        <Question 
+        fontSize={revealedCard.includes(i) ? "18px" : "16px"}
+        fontWeight={revealedCard.includes(i) ? "400" : "700"}
+        data-test="flashcard-text">
             {correctStatement(i)}
-        </QuestionNumber>
-            <Button
+            <ZapsOptions
+                zapsOptionDisplay={!revealedAnswer[i] ? "none" : "flex"}>
+                <NotRemembered data-test="no-btn">Não lembrei</NotRemembered>
+                <AlmostRemembered data-test="partial-btn">Quase não lembrei</AlmostRemembered>
+                <Remembered data-test="zap-btn">Zap!</Remembered>
+            </ZapsOptions>
+            
+        </Question>
+            <ArrowButton
             displayButton={revealedAnswer[i] ? "none" : "flex"}
             >
             {correctArrow(i)}
-            </Button>
+            </ArrowButton>
             
      </Card>  
      )
@@ -70,9 +80,8 @@ export default function CardsRender(props){
 
 const Card = styled.div`
 width: 80vw;
-height: 10.8vh;
+min-height: 10.8vh;
 
-//background-color: #FFFFFF;
 background-color: ${props => props.backgroundColor};
 box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
 border-radius: 5px;
@@ -83,14 +92,14 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 `
-const QuestionNumber = styled.div`
+const Question = styled.div`
 font-family: 'Recursive';
 font-style: normal;
-font-weight: 700;
-font-size: 16px;
+font-weight: ${props => props.fontWeight};
+font-size: ${props => props.fontSize};
 color: #333333;
 `
-const Button = styled.div`
+const ArrowButton = styled.div`
 display: ${props => props.displayButton};
 align-items: center;
 justify-content: center;
@@ -98,4 +107,50 @@ background-color: ${props => props.backgroundColor};
 
 border: none;
 background-collor: none;
+`
+
+const ZapsOptions = styled.div `
+width: 75vw;
+margin-top: 10px;
+
+font-weight: 400;
+font-size: 12px;
+color: #FFFFFF;
+
+display: ${props => props.zapsOptionDisplay};
+align-items: center;
+justify-content: space-between;
+text-align: center;
+
+`
+
+const NotRemembered = styled.div`
+width: 22.7%;
+height: 37.17px;
+background: #FF3030;
+border-radius: 5px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+`
+const AlmostRemembered = styled.div`
+width: 22.7%;
+height: 37.17px;
+background: #FF922E;
+border-radius: 5px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+`
+const Remembered = styled.div`
+width: 22.7%;
+height: 37.17px;
+background: #2FBE34;
+border-radius: 5px;
+
+display: flex;
+align-items: center;
+justify-content: center;
 `
