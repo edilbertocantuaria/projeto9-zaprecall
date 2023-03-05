@@ -9,6 +9,7 @@ export default function CardsRender(props) {
     const [revealedAnswer, setRevealedAnswer] = useState([]);
      const [deleteQuestion, setDeleteQuestion] = useState([]);
      const [statusCard, setStatusCard] = useState([]);
+     const [color, setColor] = useState([]);
     //const [teste, setTeste] = useState([]);
 
 
@@ -50,23 +51,18 @@ export default function CardsRender(props) {
     }
 
     function wrongAnswer(i) {
-        console.log(`Resposta da questão ${i + 1}: errado `)
         hiddenZapsOptions(i)
-
-        const newStatusCard = [...statusCard, "wrong"];
-        setStatusCard(newStatusCard);
-        console.log(statusCard)
-
+        statusCard[i]="wrong"
     }
 
-    function partialAnswer(i) {
-        console.log(`Resposta da questão ${i + 1}: parcial `)
+     function partialAnswer(i) {
         hiddenZapsOptions(i)
+        statusCard[i]="partial"
     }
 
     function rightAnswer(i) {
-        console.log(`Resposta da questão ${i + 1}: certa `)
         hiddenZapsOptions(i)
+        statusCard[i]="right"
     }
 
     function hiddenZapsOptions(i) {
@@ -77,6 +73,20 @@ export default function CardsRender(props) {
         setDeleteQuestion(newDeleteQuestion);
 
     }
+    function colorFont(i){
+        if (statusCard[i]==="wrong"){
+            console.log("entrou no wrong")
+            return "#FF3030"
+        }
+        if (statusCard[i]==="partial"){
+            console.log("entrou no partial")
+            return " #FF922E"
+        }
+        if (statusCard[i]==="right"){
+            console.log("entrou no right")
+            return "#2FBE34"
+        }
+    }
 
     return (
         questions.map((_, i) =>
@@ -84,7 +94,6 @@ export default function CardsRender(props) {
                 key={"question number" + i}
                 data-test="flashcard"
                 text={questions[i].question}
-                //fontColor={}
                 backgroundColor={revealedCard.includes(i) ? "#FFFFD4" : "#FFFFFF"}
 
             >
@@ -93,8 +102,7 @@ export default function CardsRender(props) {
                     fontWeight={revealedCard.includes(i) ? "400" : "700"}
                     data-test="flashcard-text"
                     lineThrough={deleteQuestion.includes(i) ? "line-through" : "none"}
-                    //fontColor={}
-                    
+                    fontColor={deleteQuestion.includes(i) ? (colorFont(i)) : "#333333"}
                     >
                     {correctStatement(i)}
                     <ZapsOptions
@@ -137,8 +145,8 @@ font-style: normal;
 text-decoration-line: ${props => props.lineThrough};
 font-weight: ${props => props.fontWeight};
 font-size: ${props => props.fontSize};
-color: #333333;
-//color: ${props => props.fontColor}
+//color: #333333;
+color: ${props => props.fontColor}
 `
 const ArrowButton = styled.div`
 display: ${props => props.displayButton};
