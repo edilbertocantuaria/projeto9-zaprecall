@@ -60,6 +60,7 @@ export default function MainScreen(props) {
 
 const Main = styled.div`
 width: 100%;
+min-height:90vh;
 background-color: #FB6B6B;
 
 display: flex;
@@ -88,10 +89,12 @@ width: 52px;
 height: 60px;
 `
 const Cards = styled.div` 
-height: 100%;
+//height: 100%;
+min-height:70vh;
 display: flex;
 flex-direction: column;
 align-items: space-between;
+justify-content: space-around;
 justify-items: center;
 
 `

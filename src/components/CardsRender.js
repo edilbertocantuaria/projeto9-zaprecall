@@ -163,7 +163,7 @@ export default function CardsRender(props) {
                 </ArrowButton>
                 <FinalIcon
                     displayIcon={deleteQuestion.includes(i) ? "flex" : "none"}
-                    teste={deleteQuestion.includes(i) ?countFlipened(i) : "" }>
+                    counting={deleteQuestion.includes(i) ?countFlipened(i) : "" }>
                     {finalIcon(i)}
                 </FinalIcon>
 
@@ -175,7 +175,7 @@ export default function CardsRender(props) {
 
 const Card = styled.div`
 width: 80vw;
-min-height: 10.8vh;
+max-height: 10.8vh;
 
 background-color: ${props => props.backgroundColor};
 box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
